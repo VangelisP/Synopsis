@@ -1,0 +1,4 @@
+/* Minor visual corrections on the editor CSS */
+#jsoneditor .json-editor-btn-collapse {
+  margin-right:5px;
+}
