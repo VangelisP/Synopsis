@@ -212,8 +212,8 @@ class CRM_Synopsis_BAO_Synopsis {
     $structuredSQL = $baseSql . $postSQL;
 
     // Do some token replacement
-    $structuredSQL = self::synopsis_replace_tokens($structuredSQL, $extconfig);
-
+    $structuredSQL = self::synopsis_replace_tokens($structuredSQL, $extconfig); 
+    
     try {
       $dao = CRM_Core_DAO::executeQuery($structuredSQL);
     }

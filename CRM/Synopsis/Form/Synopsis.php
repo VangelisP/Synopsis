@@ -13,13 +13,6 @@ class CRM_Synopsis_Form_Synopsis extends CRM_Core_Form {
 
   public function buildQuickForm() {
 
-    /*
-     * Test area
-     */
-    $pseudovars = C::singleton()->getParams();
-
-
-    // End of test area
     // Set optiongroups for selector
     $optGroups = [
       'names' => [
@@ -109,6 +102,7 @@ class CRM_Synopsis_Form_Synopsis extends CRM_Core_Form {
     $decodedValues = json_decode($values['configuration'], TRUE);
     // Variable declaration
     $formvalues = [];
+    $weight = 1;
 
     // Walk within the array
     foreach ($decodedValues as $cfkey => $cfdata) {
@@ -122,7 +116,8 @@ class CRM_Synopsis_Form_Synopsis extends CRM_Core_Form {
         'label' => $cfdata['Label'],
         'is_searchable' => 1,
         'is_view' => 1,
-        'custom_group_id' => $synTableID
+        'custom_group_id' => $synTableID,
+        'weight' => $weight
       ];
       if (is_array($fieldParams)) {
         $cfieldParams = array_merge($cfieldParams, $fieldParams);
@@ -171,6 +166,7 @@ class CRM_Synopsis_Form_Synopsis extends CRM_Core_Form {
         $decodedValues[$cfkey]['Weight'] = $result['values'][$result['id']]['weight'];
         $decodedValues[$cfkey]['column_name'] = $result['values'][$result['id']]['column_name'];
       }
+      $weight++;
     }
 
     // Sort the multidimensional array based on the value of the field `weight`

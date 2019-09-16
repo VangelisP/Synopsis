@@ -11,12 +11,18 @@ use CRM_Synopsis_ExtensionUtil as E;
  * @see https://docs.civicrm.org/dev/en/latest/framework/api-architecture/
  */
 function _civicrm_api3_synopsis_Calculate_spec(&$spec) {
-  $spec['contact_id'] = array(
+  $spec['contact_id'] = [
     'title' => E::ts('Contact ID'),
     'description' => E::ts('If specified, calculator will calculate for a specific contact. Numbers only'),
     'api.required' => 0,
     'type' => CRM_Utils_Type::T_INT,
-  );
+  ];
+  $spec['debug_only'] = [
+    'title' => E::ts('Debug only'),
+    'description' => E::ts('Prints the SQL query for the calculation but does not proceed on storing the values'),
+    'api.required' => 0,
+    'type' => CRM_Utils_Type::T_BOOLEAN,
+  ];
 }
 
 /**
@@ -29,6 +35,10 @@ function _civicrm_api3_synopsis_Calculate_spec(&$spec) {
  * @throws API_Exception
  */
 function civicrm_api3_synopsis_Calculate($params) {
+  $debug = FALSE;
+  if (isset($params['debug_only'])) {
+    $debug = TRUE;
+  }
   $single = FALSE;
   $error = '';
   $settings = CRM_Synopsis_Config::singleton()->getParams();
@@ -52,6 +62,11 @@ function civicrm_api3_synopsis_Calculate($params) {
   }
   else {
     $CalculateValues = CRM_Synopsis_BAO_Synopsis::executeCalculations();
+  }
+
+  if ($debug) {
+    $results['SQL'] = $CalculateValues;
+    return civicrm_api3_create_success($results, $params, 'Synopsis', 'Calculate');
   }
 
   if (!$CalculateValues['failed'] && !$single) {
