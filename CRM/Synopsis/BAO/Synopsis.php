@@ -212,13 +212,7 @@ class CRM_Synopsis_BAO_Synopsis {
     $structuredSQL = $baseSql . $postSQL;
 
     // Do some token replacement
-    // Contact ID
-    $structuredSQL = str_replace('{contact_id}', 'c.id', $structuredSQL);
-    // Financial types
-    if (is_array($extconfig['financial_type_ids'])) {
-      $structuredSQL = str_replace('{financial_types}', implode(',', $extconfig['financial_type_ids']), $structuredSQL);
-    }
-
+    $structuredSQL = self::synopsis_replace_tokens($structuredSQL, $extconfig);
 
     try {
       $dao = CRM_Core_DAO::executeQuery($structuredSQL);
@@ -304,14 +298,14 @@ class CRM_Synopsis_BAO_Synopsis {
     if (!empty($type)) {
       switch ($type) {
         case 'financial':
-          $values = array();
+          $values = [];
           CRM_Core_PseudoConstant::populate($values, 'CRM_Financial_DAO_FinancialType', $all = TRUE);
           break;
         case 'events':
           $values = CRM_Core_OptionGroup::values('event_type', FALSE, FALSE, FALSE, NULL, 'label', $onlyActive = FALSE);
           break;
         case 'participants':
-          $values = array();
+          $values = [];
           CRM_Core_PseudoConstant::populate($values, 'CRM_Event_DAO_ParticipantStatusType', $all = TRUE);
           break;
       }
@@ -328,6 +322,94 @@ class CRM_Synopsis_BAO_Synopsis {
       $config = CRM_Core_Config::singleton();
     }
     return in_array($component, $config->enableComponents);
+  }
+
+  /*
+   * Helper function to do the replacement of tokens
+   */
+
+  public static function synopsis_replace_tokens($query, $config) {
+    // Replace contact_id
+    $replacedSQL = str_replace('{contact_id}', 'c.id', $query);
+    // Check to see if we have financial types
+    if (is_array($config['financial_type_ids'])) {
+      $replacedSQL = str_replace('{financial_types}', implode(',', $config['financial_type_ids']), $replacedSQL);
+    }
+    else {
+      // If none selected, include all financial types
+      $finTypes = self::synopsis_get_types('financial');
+      $replacedSQL = str_replace('{financial_types}', implode(',', $finTypes), $replacedSQL);
+    }
+    $fiscal_dates = self::synopsis_get_fiscal_dates();
+    // Do fiscal date replacement
+    foreach ($fiscal_dates as $dkey => $dval) {
+      $replacedSQL = str_replace($dkey, $dval, $replacedSQL);
+    }
+
+    return $replacedSQL;
+  }
+
+  /**
+   * Based on the civicrm fiscal date setting, determine the dates for the
+   * various begin and end fiscal year dates needed by the rewrite function.
+   * Borrowed from https://github.com/progressivetech/net.ourpowerbase.sumfields/blob/master/sumfields.php#L233
+   * All credits goes to Jamie McClelland
+   * */
+  private function synopsis_get_fiscal_dates() {
+
+    $ret = array(
+      '{current_fiscal_year_begin}' => NULL,
+      '{current_fiscal_year_end}' => NULL,
+      '{last_fiscal_year_begin}' => NULL,
+      '{last_fiscal_year_end}' => NULL,
+      '{year_before_last_fiscal_year_begin}' => NULL,
+      '{year_before_last_fiscal_year_end}' => NULL,
+    );
+    $config = CRM_Core_Config::singleton();
+
+    // These are returned as not zero-padded numbers,
+    // e.g. 1 and 1 or 9 and 1
+    $fiscal_month = self::synopsis_zero_pad($config->fiscalYearStart['M']);
+    $fiscal_day = self::synopsis_zero_pad($config->fiscalYearStart['d']);
+
+    $this_calendar_year_fiscal_year_begin_ts = strtotime(date('Y') . '-' . $fiscal_month . '-' . $fiscal_day);
+    $now = time();
+    if ($now < $this_calendar_year_fiscal_year_begin_ts) {
+      // We need to adjust the current fiscal year back one year. For example, it's Feb 3
+      // and the fiscal year begins Sep 1, the current fiscal year started Sep 1 of the
+      // last calendar year.
+      $current_fiscal_year_begin_ts = strtotime('-1 year', $this_calendar_year_fiscal_year_begin_ts);
+      $current_fiscal_year_end_ts = strtotime('-1 day', $this_calendar_year_fiscal_year_begin_ts);
+      $last_fiscal_year_begin_ts = strtotime('-2 year', $this_calendar_year_fiscal_year_begin_ts);
+      $last_fiscal_year_end_ts = strtotime('-1 year -1 day', $this_calendar_year_fiscal_year_begin_ts);
+      $year_before_last_fiscal_year_begin_ts = strtotime('-3 year', $this_calendar_year_fiscal_year_begin_ts);
+      $year_before_last_fiscal_year_end_ts = strtotime('-2 year -1 day', $this_calendar_year_fiscal_year_begin_ts);
+    }
+    else {
+      $current_fiscal_year_begin_ts = $this_calendar_year_fiscal_year_begin_ts;
+      $current_fiscal_year_end_ts = strtotime('+1 year -1 day', $this_calendar_year_fiscal_year_begin_ts);
+      $last_fiscal_year_begin_ts = strtotime('-1 year', $this_calendar_year_fiscal_year_begin_ts);
+      $last_fiscal_year_end_ts = strtotime('-1 day', $this_calendar_year_fiscal_year_begin_ts);
+      $year_before_last_fiscal_year_begin_ts = strtotime('-2 year', $this_calendar_year_fiscal_year_begin_ts);
+      $year_before_last_fiscal_year_end_ts = strtotime('-1 year -1 day', $this_calendar_year_fiscal_year_begin_ts);
+    }
+    return array(
+      '{current_fiscal_year_begin}' => date('Y-m-d', $current_fiscal_year_begin_ts),
+      '{current_fiscal_year_end}' => date('Y-m-d', $current_fiscal_year_end_ts),
+      '{last_fiscal_year_begin}' => date('Y-m-d', $last_fiscal_year_begin_ts),
+      '{last_fiscal_year_end}' => date('Y-m-d', $last_fiscal_year_end_ts),
+      '{year_before_last_fiscal_year_begin}' => date('Y-m-d', $year_before_last_fiscal_year_begin_ts),
+      '{year_before_last_fiscal_year_end}' => date('Y-m-d', $year_before_last_fiscal_year_end_ts),
+    );
+  }
+
+  /**
+   * Utility function for calculating fiscal years
+   * */
+  private function synopsis_zero_pad($num) {
+    if (strlen($num) == 1)
+      return '0' . $num;
+    return $num;
   }
 
 }

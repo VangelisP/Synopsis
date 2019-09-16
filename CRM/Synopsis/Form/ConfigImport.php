@@ -9,6 +9,7 @@ use CRM_Synopsis_Config as C;
  * @see https://docs.civicrm.org/dev/en/latest/framework/quickform/
  */
 class CRM_Synopsis_Form_ConfigImport extends CRM_Core_Form {
+
   public function buildQuickForm() {
     // this is an import
     CRM_Utils_System::setTitle(E::ts("Configuration importer"));
@@ -40,25 +41,27 @@ class CRM_Synopsis_Form_ConfigImport extends CRM_Core_Form {
         foreach ($_FILES['config_files']['tmp_name'] as $tmp_name) {
           // We expect a valid json format
           $data = file_get_contents($tmp_name);
-          // Do a validation test first          
+          // Do a validation test first
           $ob = json_decode($data);
           if ($ob === null) {
             $invalid = 1;
           }
           if (!$invalid) {
             // Setup the proper structure
-            $formvalues['configuration'] = $data;
+            $formvalues['field_configuration'] = $data;
 
             try {
               // Save the configuration settings
               //Civi::settings()->set('rm_cluster_names', $formvalues);
+              CRM_Synopsis_Config::singleton()->setParams($formvalues);
               CRM_Core_Session::setStatus(E::ts('New configuration(s) have been imported'), E::ts('Success'));
               $redirect = 1;
             }
             catch (Exception $ex) {
               CRM_Core_Session::setStatus(E::ts('Import/update failed: %1', [1 => $ex->getMessage()]), E::ts('Failed'));
             }
-          } else {
+          }
+          else {
             CRM_Core_Session::setStatus(E::ts('File is NOT a valid JSON file, please review the file that you try to upload'), E::ts('Error'));
           }
         }

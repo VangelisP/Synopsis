@@ -66,6 +66,12 @@ Saving the form will create the added fields into CiviCRM.
 
 Further tokens include:
 * {financial_types} : Financial type IDs to include. Configurable under: `/civicrm/admin/settings/synopsis/config`
+* {current_fiscal_year_begin}
+* {current_fiscal_year_end}
+* {last_fiscal_year_begin}
+* {last_fiscal_year_end}
+* {year_before_last_fiscal_year_begin}
+* {year_before_last_fiscal_year_end}
 
 Synopsis is coming with its own API that you can add as a scheduled job.
 You can also call it via drush: `drush cvapi Synopsis.calculate`
@@ -86,5 +92,5 @@ Plenty, follow: https://git.ixiam.com/civicrm/synopsis/issues
 
 ## Credits
 
-Many thanks to Jamie Mcclelland and his excellent [SummaryFields extension](https://civicrm.org/extensions/summary-fields) (Git repo [link](https://github.com/progressivetech/net.ourpowerbase.sumfields.git)).
+Many thanks to Jamie McClelland and his excellent [SummaryFields extension](https://civicrm.org/extensions/summary-fields) (Git repo [link](https://github.com/progressivetech/net.ourpowerbase.sumfields.git)).
 A big part of the source code and his ideas are being borrowed by his extension.

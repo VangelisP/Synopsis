@@ -30,6 +30,22 @@ function _civicrm_api3_synopsis_Calculate_spec(&$spec) {
  */
 function civicrm_api3_synopsis_Calculate($params) {
   $single = FALSE;
+  $error = '';
+  $settings = CRM_Synopsis_Config::singleton()->getParams();
+  $fieldConfig = $settings['field_config'];
+  if (!is_array($fieldConfig)) {
+    $error = 'No configuration found';
+  }
+  elseif (is_array($fieldConfig) && count($fieldConfig) == 0) {
+    $error = 'No fields found';
+  }
+  if (!empty($error)) {
+    throw new API_Exception($error);
+  }
+
+  // Setup some timers
+  $execution_time = microtime(true); // Process duration counter, start of count
+
   if (isset($params['contact_id']) && is_numeric($params['contact_id'])) {
     $CalculateValues = CRM_Synopsis_BAO_Synopsis::executeCalculations($params['contact_id']);
     $single = TRUE;
@@ -46,5 +62,10 @@ function civicrm_api3_synopsis_Calculate($params) {
     $returnValues = CRM_Synopsis_BAO_Synopsis::StoreCalculations($CalculateValues['temp_table'], $params['contact_id']);
   }
 
-  return civicrm_api3_create_success($returnValues, $params, 'Synopsis', 'Calculate');
+  $execution_time = microtime(true) - $execution_time;
+  $results = [
+    'output' => $returnValues,
+    'process_time' => number_format($execution_time, 3) . ' seconds'
+  ];
+  return civicrm_api3_create_success($results, $params, 'Synopsis', 'Calculate');
 }
