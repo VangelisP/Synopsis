@@ -172,7 +172,6 @@ class CRM_Synopsis_BAO_Synopsis {
     $settings = CRM_Synopsis_Config::singleton()->getParams();
     $fieldConfig = $settings['field_config'];
     $extconfig = $settings['global_config'];
-    $finTypes = [];
     $SelectClause = [];
     $failed = false;
     $tmpTable = 'civicrm_synopsis_tmp_' . uniqid();
@@ -195,7 +194,7 @@ class CRM_Synopsis_BAO_Synopsis {
       (INDEX cmpd_key (entity_id))
       SELECT
         c.id as entity_id,";
-    $baseSql .= implode(', ', $SelectClause);
+    $baseSql .= implode(", \n", $SelectClause);
     if (!empty($contact_id)) {
       $whereClause = " WHERE c.id = {$contact_id} ";
     }
@@ -212,8 +211,8 @@ class CRM_Synopsis_BAO_Synopsis {
     $structuredSQL = $baseSql . $postSQL;
 
     // Do some token replacement
-    $structuredSQL = self::synopsis_replace_tokens($structuredSQL, $extconfig); 
-    
+    $structuredSQL = self::synopsis_replace_tokens($structuredSQL, $extconfig);
+
     try {
       $dao = CRM_Core_DAO::executeQuery($structuredSQL);
     }
@@ -233,6 +232,7 @@ class CRM_Synopsis_BAO_Synopsis {
 
   /*
    * Call to store the previously executed calculation(s)
+   * We'll need the temp table name
    */
 
   public static function StoreCalculations($tmpTable, $contact_id = NULL) {
@@ -331,7 +331,7 @@ class CRM_Synopsis_BAO_Synopsis {
   public static function synopsis_replace_tokens($query, $config) {
     // Replace contact_id
     $replacedSQL = str_replace('{contact_id}', 'c.id', $query);
-    // Check to see if we have financial types
+    // Check to see if we have financial types and replace them as well
     if (is_array($config['financial_type_ids'])) {
       $replacedSQL = str_replace('{financial_types}', implode(',', $config['financial_type_ids']), $replacedSQL);
     }
@@ -352,8 +352,9 @@ class CRM_Synopsis_BAO_Synopsis {
   /**
    * Based on the civicrm fiscal date setting, determine the dates for the
    * various begin and end fiscal year dates needed by the rewrite function.
+   * 
    * Borrowed from https://github.com/progressivetech/net.ourpowerbase.sumfields/blob/master/sumfields.php#L233
-   * All credits goes to Jamie McClelland
+   * All credits go to Jamie McClelland
    * */
   private function synopsis_get_fiscal_dates() {
 

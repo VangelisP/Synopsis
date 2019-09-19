@@ -5,8 +5,8 @@
   <description>Synopsis is an extension that will create dynamic CustomFields for contacts and will populate each one of them with a custom MySQL snippet (user-defined)</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Vangelis Pantazis</author>
-    <email>v.pantazis@ixiam.com</email>
+    <author>iXiam</author>
+    <email>info@ixiam.com</email>
   </maintainer>
   <urls>
     <url desc="Main Extension Page">https://git.ixiam.com/civicrm/synopsis</url>
@@ -15,7 +15,7 @@
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
   <releaseDate>2019-09-15</releaseDate>
-  <version>0.1</version>
+  <version>0.1.0</version>
   <develStage>alpha</develStage>
   <compatibility>
     <ver>5.0</ver>

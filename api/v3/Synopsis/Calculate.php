@@ -65,7 +65,8 @@ function civicrm_api3_synopsis_Calculate($params) {
   }
 
   if ($debug) {
-    $results['SQL'] = $CalculateValues;
+    $results = $CalculateValues;
+    $results['output'] = 'debug, no store (display only)';
     return civicrm_api3_create_success($results, $params, 'Synopsis', 'Calculate');
   }
 

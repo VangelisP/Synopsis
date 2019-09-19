@@ -90,6 +90,10 @@ Plenty, follow: https://git.ixiam.com/civicrm/synopsis/issues
 * Add graphs (Chart.js) on a separate tab
 * Proper weight control
 
+## Technical information
+
+For more in-depth information, read [here](Development.md)
+
 ## Credits
 
 Many thanks to Jamie McClelland and his excellent [SummaryFields extension](https://civicrm.org/extensions/summary-fields) (Git repo [link](https://github.com/progressivetech/net.ourpowerbase.sumfields.git)).
