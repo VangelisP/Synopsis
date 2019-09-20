@@ -1,7 +1,7 @@
 {* HEADER *}
 <div class="help">
-  Please select below which kind of optionsvalues you would like to include to the queries. They will be available as tokens.
-  For example, for financial types, the proper token to use in the query is `&lbrace;financial_types&rbrace;`.
+  {ts domain='Synopsis'}Please select below which kind of optionsvalues you would like to include to the queries. They will be available as tokens.
+  For example, for financial types, the proper token to use in the query is `&lbrace;financial_types&rbrace;`.{/ts}
 </div>
 {foreach from=$elementNames item=elementName}
   <div class="crm-section">

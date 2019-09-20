@@ -1,7 +1,7 @@
 <div class="crm-section">
-  <h3>Configuration upload page</h3>
-  Notice: If you upload a configuration file (JSON format) your previous configuration will be overriden and cannot be reverted back!<br/>
-  Please be careful!<br/>
+  <h3>{ts domain='Synopsis'}Configuration upload page{/ts}</h3>
+  {ts domain='Synopsis'}Notice: If you upload a configuration file (JSON format) your previous configuration will be overriden and cannot be reverted back!{/ts}<br/>
+  {ts domain='Synopsis'}Please be careful!{/ts}<br/>
 </div>
 <hr>
 <div class="crm-section">

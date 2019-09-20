@@ -2,30 +2,30 @@
 <h3>{ts domain='synopsis'}Guide{/ts}</h3>
 <div class="crm-section">
   <div id="help" class="description">
-    Configuring Synopsis fields requires db skills<br/><br/>
-    <h4>Basic information</h4><br/>
-    <strong>CustomField ID</strong> is the internal numeric ID that is being given when a CustomField is being created. Initially, this field is 0 but as soon as the customfield is being created, it will inherit the actual ID.<br/>
-    <strong>Machine name</strong> is the internal name that is being given to a customfield. Initially, this field is empty but as soon as the customfield is being created, it will show up the machine name.<br/>
-    <strong>Label</strong> is the label of your customfield.<br/>
-    <strong>DataType</strong> is the type of customfield you want to create/use.<br/>
-    <strong>Select Reference</strong> works only if you have picked up 'Selector' as Datatype above. This field will be ignored if datatype is not of type 'Selector'.<br/>
+    {ts domain='Synopsis'}Configuring Synopsis fields requires db skills{/ts}<br/><br/>
+    <h4>{ts domain='Synopsis'}Basic information{/ts}</h4><br/>
+    {ts domain='Synopsis'}<strong>CustomField ID</strong> is the internal numeric ID that is being given when a CustomField is being created. Initially, this field is 0 but as soon as the customfield is being created, it will inherit the actual ID.{/ts}<br/>
+    {ts domain='Synopsis'}<strong>Machine name</strong> is the internal name that is being given to a customfield. Initially, this field is empty but as soon as the customfield is being created, it will show up the machine name.{/ts}<br/>
+    {ts domain='Synopsis'}<strong>Label</strong> is the label of your customfield.{/ts}<br/>
+    {ts domain='Synopsis'}<strong>DataType</strong> is the type of customfield you want to create/use.{/ts}<br/>
+    {ts domain='Synopsis'}<strong>Select Reference</strong> works only if you have picked up 'Selector' as Datatype above. This field will be ignored if datatype is not of type 'Selector'.{/ts}<br/>
     <br/>
-    <h4>Advanced information</h4><br/>
-    <strong>Query</strong> is the actual query that needs to be run in order to bring results. Remember to use tokens as replacements for contact ID and/or financial types<br/>
-    <strong>Option Group</strong> is a general categorization of that field.<br/>
+    <h4>{ts domain='Synopsis'}Advanced information{/ts}</h4><br/>
+    {ts domain='Synopsis'}<strong>Query</strong> is the actual query that needs to be run in order to bring results. Remember to use tokens as replacements for contact ID and/or financial types{/ts}<br/>
+    {ts domain='Synopsis'}<strong>Option Group</strong> is a general categorization of that field.{/ts}<br/>
     <br/>
-    <h4>Misc</h4><br/>
-    <strong>Graph</strong><br/>
-    <strong>Remove</strong> If checked, this field will be permanently removed upon form saving.<br/>
+    <h4>{ts domain='Synopsis'}Misc{/ts}</h4><br/>
+    {ts domain='Synopsis'}<strong>Graph</strong>{/ts}<br/>
+    {ts domain='Synopsis'}<strong>Remove</strong> If checked, this field will be permanently removed upon form saving.{/ts}<br/>
     <br/>
-    <h4>Operations</h4><br/>
-    To <strong>add</strong> a new field, click on the '+ Entry' button.<br/>
-    To <strong>delete</strong> a field, select the checkbox "Remove" and save the form..<br/>
+    <h4>{ts domain='Synopsis'}Operations{/ts}</h4><br/>
+    {ts domain='Synopsis'}To <strong>add</strong> a new field, click on the '+ Entry' button.{/ts}<br/>
+    {ts domain='Synopsis'}To <strong>delete</strong> a field, select the checkbox "Remove" and save the form.{/ts}<br/>
     <br />
-    <h4>Maintenance</h4><br/>
-    You can import a fresh configuration (in JSON format) by clicking <a href="{crmURL p="civicrm/admin/settings/synopsis/configimport"}">{ts domain='Synopsis'}here{/ts}</a> but please keep in mind that it will <u>wipe out</u> completely the current configuration you already created.<br />
-    <strong>There is NO undoing</strong> !<br /><br />
-    You can manage replacement token values by clicking <a href="{crmURL p="civicrm/admin/settings/synopsis/config"}">{ts domain='Synopsis'}here{/ts}</a>.<br />
+    <h4>{ts domain='Synopsis'}Maintenance{/ts}</h4><br/>
+    {ts domain='Synopsis'}You can import a fresh configuration (in JSON format) by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/configimport"}">{ts domain='Synopsis'}here{/ts}</a>{ts} but please keep in mind that it will <u>wipe out</u> completely the current configuration you already created.{/ts}<br />
+    {ts domain='Synopsis'}<strong>There is NO undoing</strong> !{/ts}<br /><br />
+    {ts domain='Synopsis'}You can manage replacement token values by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/config"}">{ts domain='Synopsis'}here{/ts}</a>.<br />
     <br />
   </div>
 </div>
