@@ -54,7 +54,7 @@ class CRM_Synopsis_Form_ConfigImport extends CRM_Core_Form {
               // Save the configuration settings
               //Civi::settings()->set('rm_cluster_names', $formvalues);
               CRM_Synopsis_Config::singleton()->setParams($formvalues);
-              CRM_Core_Session::setStatus(E::ts('New configuration(s) have been imported'), E::ts('Success'));
+              CRM_Core_Session::setStatus(E::ts('New configuration file has been imported'), E::ts('Success'));
               $redirect = 1;
             }
             catch (Exception $ex) {
@@ -62,12 +62,12 @@ class CRM_Synopsis_Form_ConfigImport extends CRM_Core_Form {
             }
           }
           else {
-            CRM_Core_Session::setStatus(E::ts('File is NOT a valid JSON file, please review the file that you try to upload'), E::ts('Error'));
+            CRM_Core_Session::setStatus(E::ts('File is NOT a valid JSON file, please review the file and/or structure of that file that you try to upload'), E::ts('Error'));
           }
         }
       }
       else {
-        CRM_Core_Session::setStatus(E::ts('No configuration files selected'), E::ts('Error'));
+        CRM_Core_Session::setStatus(E::ts('No configuration file selected'), E::ts('Error'));
       }
     }
     catch (Exception $ex) {

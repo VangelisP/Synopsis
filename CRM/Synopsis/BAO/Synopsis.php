@@ -89,6 +89,7 @@ class CRM_Synopsis_BAO_Synopsis {
           'html_type' => 'Text',
           'data_type' => 'String',
           'text_length' => 128,
+          'is_search_range' => True,
         ];
         break;
       case 'Money':
@@ -96,6 +97,7 @@ class CRM_Synopsis_BAO_Synopsis {
           'html_type' => 'Text',
           'data_type' => 'Money',
           'text_length' => 32,
+          'is_search_range' => True,
         ];
         break;
       case 'Date':
@@ -105,6 +107,7 @@ class CRM_Synopsis_BAO_Synopsis {
           'text_length' => 32,
           'date_format' => (!empty(Civi::settings()->get('dateInputFormat'))) ? Civi::settings()->get('dateInputFormat') : 'mm/dd/yy',
           'time_format' => Civi::settings()->get('timeInputFormat'),
+          'is_search_range' => True,          
         ];
         break;
       case 'Selector':
