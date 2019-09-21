@@ -4,19 +4,19 @@
 
 The structure of the query is segmented in 3 different parts.
 
-Initial part (the header)
+### Initial part (the header)
 
 ```sql
 SELECT
   c.id as entity_id,
 ```
 
-Snippet part
+### Snippet part
 
-We loop each field and render the MySQL snippet.
-Each MySQL snippet should bring only 1 column
+We loop each field and render its associated MySQL snippet.
+Each MySQL snippet should bring **only 1 column** strictly!
 
-Final part (the footer)
+### Final part (the footer)
 
 ```sql
 FROM civicrm_contact c
@@ -51,10 +51,21 @@ GROUP BY c.id
 Lastly, replacement of tokens take place where they will replace the placeholders `{contact_id}` and `{financial_types}` with their associated values.
 
 
-## Debugging
+## Debugging / Maintenance
 
 Currently, you can debug your queries by using the parameter
 
 ### debug_only
 
 By adding `debug_only=1` to your call, you'll get a printout of the complete MySQL query, <u>after</u> the token replacement but without actually storing the query results into the table.
+
+### Extension maintenance
+
+There are 2 **destructive** API call parameters at the moment that could prove useful in case you'having issues with corrupted configuration:
+
+The main call: `drush cvapi Synopsis.Maintenance operation='parameter'`.
+
+The 'parameter':
+
+* `delete_stored_config` : Will delete the stored database configuration (but not the actual CustomFields)
+* `delete_stored_customfields` : Will delete **all** customfields under CustomGroup called Synopsis

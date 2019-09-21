@@ -149,9 +149,9 @@
                 Graph: {
                   type: "boolean",
                   title: "Graph",
-                  format: "checkbox",
+                  format: "hidden",
                   options: {
-                    infoText: "Create a graphic while rendering this"
+                    compact: true
                   }
                 },
                 Remove: {

@@ -1,7 +1,7 @@
 <div class="updatebtn" style="padding:5px 0;margin-bottom:25px;">
 <a id="updatecontact" class="no-popup button" href="#">
   <span>
-    <i class="crm-i fa-refresh"></i>&nbsp;{ts domain='Synopsis'}Refresh this contact{/ts}
+    <i class="crm-i fa-refresh"></i>&nbsp;{ts domain='Synopsis'}Update this contact information{/ts}
   </span>
 </a>
 </div>
