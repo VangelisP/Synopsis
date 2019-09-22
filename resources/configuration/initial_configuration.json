@@ -182,11 +182,24 @@
     "column_name": ""
   },
   {
-    "Label": "Count of contributions",
+    "Label": "Total count of contributions",
     "MName": "",
     "DataType": "String",
     "SelectRef": "none",
     "Query": "SELECT COALESCE(COUNT(t1.id), 0) FROM civicrm_contribution t1\nWHERE t1.contact_id = {contact_id} AND t1.contribution_status_id = 1 AND\nt1.financial_type_id IN ({financial_types}) AND t1.is_test = 0",
+    "Optgroup": "fundraising",
+    "Graph": false,
+    "Remove": false,
+    "CFID": 0,
+    "Weight": "",
+    "column_name": ""
+  },
+  {
+    "Label": "Count of contributions this year",
+    "MName": "",
+    "DataType": "String",
+    "SelectRef": "none",
+    "Query": "SELECT COALESCE(COUNT(t1.id), 0) \nFROM civicrm_contribution t1\nWHERE t1.contact_id = {contact_id}\nAND t1.contribution_status_id = 1 AND\nt1.financial_type_id IN ({financial_types})  \nAND YEAR(t1.receive_date) = YEAR(CURDATE())\nAND t1.is_test = 0",
     "Optgroup": "fundraising",
     "Graph": false,
     "Remove": false,

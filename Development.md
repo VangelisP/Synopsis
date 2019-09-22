@@ -26,23 +26,24 @@ GROUP BY c.id
 
 The `{where clause}` is getting used if we specified a `contact_id` parameter during the API call.
 
-For example, lets take the example of count of contribution. if our field's MySQL snippet is this:
+For example, lets take the example of 'total count of contributions'. if our field's MySQL snippet, it's declared like this:
 
 ```sql
 SELECT COALESCE(COUNT(t1.id), 0) FROM civicrm_contribution t1
-JOIN civicrm_line_item t2 ON t1.id = t2.contribution_id
-WHERE t1.contact_id = {contact_id} AND t1.contribution_status_id = 1 AND
-t1.financial_type_id IN ({financial_types}) AND t1.is_test = 0
+WHERE t1.contact_id = {contact_id} AND t1.contribution_status_id = 1 
+AND t1.financial_type_id IN ({financial_types}) 
+AND t1.is_test = 0
 ```
-then the final MySQL query would become like this
+then, while preparing the final MySQL statement, query will become like this
 
 ```sql
 SELECT
   c.id as entity_id,
   (SELECT COALESCE(COUNT(t1.id), 0) FROM civicrm_contribution t1
-  JOIN civicrm_line_item t2 ON t1.id = t2.contribution_id
-  WHERE t1.contact_id = {contact_id} AND t1.contribution_status_id = 1 AND
-  t1.financial_type_id IN ({financial_types}) AND t1.is_test = 0),
+  WHERE t1.contact_id = {contact_id} 
+  AND t1.contribution_status_id = 1 
+  AND t1.financial_type_id IN ({financial_types}) 
+  AND t1.is_test = 0),
 FROM civicrm_contact c
 {where clause}
 GROUP BY c.id

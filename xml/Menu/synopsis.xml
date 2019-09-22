@@ -7,12 +7,6 @@
     <access_arguments>administer Synopsis</access_arguments>
   </item>
   <item>
-    <path>civicrm/synopsis/dashlet</path>
-    <page_callback>CRM_Synopsis_Page_Dashlet</page_callback>
-    <title>Dashlet</title>
-    <access_arguments>access CiviCRM</access_arguments>
-  </item>
-  <item>
     <path>civicrm/admin/settings/synopsis/configimport</path>
     <page_callback>CRM_Synopsis_Form_ConfigImport</page_callback>
     <title>Synopsis configuration importer</title>
