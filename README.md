@@ -10,6 +10,29 @@ Features:
 * Ability to import an initial configuration via the JSON importer (included)
 * Fields are accessible on advanced search and on reports instantly
 
+Comes with the following available fields
+
+* Total Lifetime Contributions
+* Total Contributions in the Last 12 Months
+* Total Contributions this Fiscal Year
+* Total Deductible Contributions this Fiscal Year
+* Total Contributions last Fiscal Year
+* Total Deductible Contributions last Fiscal Year
+* Total Contributions Fiscal Year Before Last
+* Total Deductible Contributions Fiscal Year Before Last
+* Amount of last contribution
+* Date of Last Contribution
+* Amount of first contribution
+* Date of First Contribution
+* Campaign of first contribution
+* Largest Contribution
+* Total count of contributions
+* Count of contributions this year
+* Count of contributions last year
+* Count of contributions year before last year
+* Average Annual (Calendar Year) Contribution
+* Campaign of largest contribution
+
 The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 ## Screenshots
