@@ -73,6 +73,8 @@ cv en synopsis
 
 Upon a successful installation of this extension, declare your fields under Administer > Customize data and screens > Synopsis fields
 
+As an alternative, you can also import an initial configuration that is located [here](resources/configuration/initial_configuration.json) by navigating to `/civicrm/admin/settings/synopsis/configimport`. Once imported, page will redirect back to the Synopsis Fields. Save the form and you're done!
+
 * **CustomField ID** is the internal numeric ID that is being given when a CustomField is being created. Initially, this field is 0 but as soon as the customfield is being created, it will inherit the actual ID that is being stored in the DB. This field is **disabled** from editing.
 * **Machine name** is the internal name that is being given to a CustomField. Initially, this field is empty but as soon as the CustomField is being created, it will show up the machine name. This field is **disabled** from editing.
 * **Label** is the label of your CustomField.
@@ -111,7 +113,6 @@ Plenty, follow: https://git.ixiam.com/civicrm/synopsis/issues
 ## Todo
 
 * Add graphs (Chart.js) on a separate tab
-* Proper weight control
 
 ## Technical information
 
