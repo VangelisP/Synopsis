@@ -15,7 +15,6 @@
     {ts domain='synopsis'}<strong>Option Group</strong> is a general categorization of that field.{/ts}<br/>
     <br/>
     <h4>{ts domain='synopsis'}Misc{/ts}</h4><br/>
-    {ts domain='synopsis'}<strong>Graph</strong>{/ts}<br/>
     {ts domain='synopsis'}<strong>Remove</strong> If checked, this field will be permanently removed upon form saving.{/ts}<br/>
     <br/>
     <h4>{ts domain='synopsis'}Operations{/ts}</h4><br/>
@@ -25,7 +24,7 @@
     <h4>{ts domain='synopsis'}Maintenance{/ts}</h4><br/>
     {ts domain='synopsis'}You can import a fresh configuration (in JSON format) by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/configimport"}">{ts domain='synopsis'}here{/ts}</a>{ts} but please keep in mind that it will <u>wipe out</u> completely the current configuration you already created.{/ts}<br />
     {ts domain='synopsis'}<strong>There is NO undoing</strong> !{/ts}<br /><br />
-    {ts domain='synopsis'}You can manage replacement token values by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/config"}">{ts domain='synopsis'}here{/ts}</a>.<br />
+    {ts domain='synopsis'}You can manage financial types/events etc to include by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/config"}">{ts domain='synopsis'}here{/ts}</a>.<br />
     <br />
   </div>
 </div>
