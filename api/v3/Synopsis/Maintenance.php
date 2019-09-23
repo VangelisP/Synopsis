@@ -28,42 +28,19 @@ function civicrm_api3_synopsis_Maintenance($params) {
 
   switch ($params['operation']) {
     case 'delete_stored_config':
-      // Delete the stored configuration
-      $destructiveConfig = [];
-      $formvalues['field_configuration'] = json_encode($destructiveConfig);
+      $params = [
+        'operation' => "delete_stored_config",
+      ];
+      $status = _synopsis_maintenance($params);
 
-      try {
-        // Don't use `Civi::settings()->set` directly as it will override the stored settings!
-        // We're using a tree like structure to minimize the stored DB variables
-        CRM_Synopsis_Config::singleton()->setParams($formvalues);
-      }
-      catch (Exception $ex) {
-        // Throw the error to the status popup
-        throw new API_Exception(/* errorMessage */ 'Error saving the configuration', $ex->getMessage());
-      }
       $results['status'] = 'DB configuration has been deleted';
       break;
     case 'delete_stored_customfields':
-      $cnt = 0;
-      // Remove all stored customfields from CiviCRM that are under CustomGroup "Synopsis"
-      // Fetch all children IDs
-      try {
-        $result = civicrm_api3('CustomField', 'get', ['return' => ["id"], 'custom_group_id' => "Synopsis_Fields"]);
-      }
-      catch (Exception $ex) {
-        throw new API_Exception('Error using CustomField.get API', $ex->getMessage());
-      }
-      // Loop over the results
-      if (isset($result['count']) && $result['count'] > 0) {
-        foreach ($result['values'] as $childKey) {
-          if (isset($childKey['id'])) {
-            $result = civicrm_api3('CustomField', 'delete', ['id' => $childKey['id']]);
-          }
-          $cnt++;
-        }
-      }
-      $results['status'] = ($cnt > 0) ? 'CustomFields deleted' : 'No CustomFields found to delete';
-      $results['count'] = $cnt;
+      $params = [
+        'operation' => "delete_stored_customfields",
+      ];
+      $results = _synopsis_maintenance($params);
+
       break;
   }
   return civicrm_api3_create_success($results, $params, 'Synopsis', 'Maintenance');

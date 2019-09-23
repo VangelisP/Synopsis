@@ -117,6 +117,18 @@ function synopsis_civicrm_postInstall() {
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_uninstall
  */
 function synopsis_civicrm_uninstall() {
+  $params = [
+    'operation' => "delete_stored_customfields",
+  ];
+  _synopsis_maintenance($params);
+  $params = [
+    'operation' => "delete_customgroup",
+  ];
+  _synopsis_maintenance($params);
+  $params = [
+    'operation' => "delete_synopsis_config",
+  ];
+  _synopsis_maintenance($params);
   _synopsis_civix_civicrm_uninstall();
 }
 
@@ -127,13 +139,9 @@ function synopsis_civicrm_uninstall() {
  */
 function synopsis_civicrm_enable() {
   $tableValidation = _synopsis_ensure_table_exists();
-  $session = CRM_Core_Session::singleton();
-  $msg = E::ts("The extension is re-enabled. Please go to Administer -> Customize Data and Screens -> Synopsis Fields to review configuration.");
   _synopsis_civix_civicrm_enable();
   // Store the settings
   C::singleton()->setParams($tableValidation);
-  // Show the message
-  $session->setStatus($msg);
 }
 
 /*
@@ -298,4 +306,64 @@ function synopsis_civicrm_navigationMenu(&$menu) {
     'separator' => '0'
   ));
   _synopsis_civix_navigationMenu($menu);
+}
+
+function _synopsis_maintenance($params) {
+  $results = [];
+
+  switch ($params['operation']) {
+    case 'delete_synopsis_config':
+      $sql = "DELETE FROM civicrm_setting WHERE name = 'synopsis_config'";
+      CRM_Core_DAO::executeQuery($sql);
+      break;
+    case 'delete_stored_config':
+      // Delete the stored configuration
+      $destructiveConfig = [];
+      $formvalues['field_configuration'] = json_encode($destructiveConfig);
+
+      try {
+        $storedSettings = Civi::settings()->get('synopsis_config');
+        Civi::settings()->set('synopsis_config', array_merge($storedSettings, $formvalues));
+      }
+      catch (Exception $ex) {
+        // Throw the error to the status popup
+        throw new API_Exception(/* errorMessage */ 'Error saving the configuration', $ex->getMessage());
+      }
+      $results['status'] = 'DB configuration has been deleted';
+      break;
+    case 'delete_stored_customfields':
+      $cnt = 0;
+      // Remove all stored customfields from CiviCRM that are under CustomGroup "Synopsis"
+      // Fetch all children IDs
+      try {
+        $result = civicrm_api3('CustomField', 'get', ['return' => ["id"], 'custom_group_id' => "Synopsis_Fields"]);
+      }
+      catch (Exception $ex) {
+        throw new API_Exception('Error using CustomField.get API', $ex->getMessage());
+      }
+      // Loop over the results
+      if (isset($result['count']) && $result['count'] > 0) {
+        foreach ($result['values'] as $childKey) {
+          if (isset($childKey['id'])) {
+            $result = civicrm_api3('CustomField', 'delete', ['id' => $childKey['id']]);
+          }
+          $cnt++;
+        }
+      }
+      $results['status'] = ($cnt > 0) ? 'CustomFields deleted' : 'No CustomFields found to delete';
+      $results['count'] = $cnt;
+      break;
+    case 'delete_customgroup':
+      try {
+        $resultCG = civicrm_api3('CustomGroup', 'getsingle', ['name' => "Synopsis_Fields"]);
+      }
+      catch (Exception $ex) {
+
+      }
+      if (isset($resultCG['id'])) {
+        $result = civicrm_api3('CustomGroup', 'delete', ['id' => $resultCG['id']]);
+      }
+      break;
+  }
+  return $results;
 }

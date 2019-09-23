@@ -106,7 +106,12 @@ class CRM_Synopsis_Config {
   public function setParams($params = []) {
     // We need to make sure that we don't override other parameter
     $storedSettings = Civi::settings()->get('synopsis_config');
-    Civi::settings()->set('synopsis_config', array_merge($storedSettings, $params));
+    if (is_array($storedSettings)) {
+      Civi::settings()->set('synopsis_config', array_merge($storedSettings, $params));
+    }
+    else {
+      Civi::settings()->set('synopsis_config', array_merge($params));
+    }
   }
 
   private function isJSON($string) {
