@@ -2,30 +2,29 @@
 <h3>{ts domain='synopsis'}Guide{/ts}</h3>
 <div class="crm-section">
   <div id="help" class="description">
-    {ts domain='Synopsis'}Configuring Synopsis fields requires db skills{/ts}<br/><br/>
-    <h4>{ts domain='Synopsis'}Basic information{/ts}</h4><br/>
-    {ts domain='Synopsis'}<strong>CustomField ID</strong> is the internal numeric ID that is being given when a CustomField is being created. Initially, this field is 0 but as soon as the customfield is being created, it will inherit the actual ID.{/ts}<br/>
-    {ts domain='Synopsis'}<strong>Machine name</strong> is the internal name that is being given to a customfield. Initially, this field is empty but as soon as the customfield is being created, it will show up the machine name.{/ts}<br/>
-    {ts domain='Synopsis'}<strong>Label</strong> is the label of your customfield.{/ts}<br/>
-    {ts domain='Synopsis'}<strong>DataType</strong> is the type of customfield you want to create/use.{/ts}<br/>
-    {ts domain='Synopsis'}<strong>Select Reference</strong> works only if you have picked up 'Selector' as Datatype above. This field will be ignored if datatype is not of type 'Selector'.{/ts}<br/>
+    {ts domain='synopsis'}Configuring Synopsis fields requires db skills{/ts}<br/><br/>
+    <h4>{ts domain='synopsis'}Basic information{/ts}</h4><br/>
+    {ts domain='synopsis'}<strong>CustomField ID</strong> is the internal numeric ID that is being given when a CustomField is being created. Initially, this field is 0 but as soon as the customfield is being created, it will inherit the actual ID.{/ts}<br/>
+    {ts domain='synopsis'}<strong>Machine name</strong> is the internal name that is being given to a customfield. Initially, this field is empty but as soon as the customfield is being created, it will show up the machine name.{/ts}<br/>
+    {ts domain='synopsis'}<strong>Label</strong> is the label of your customfield.{/ts}<br/>
+    {ts domain='synopsis'}<strong>DataType</strong> is the type of customfield you want to create/use.{/ts}<br/>
+    {ts domain='synopsis'}<strong>Select Reference</strong> works only if you have picked up 'Selector' as Datatype above. This field will be ignored if datatype is not of type 'Selector'.{/ts}<br/>
     <br/>
-    <h4>{ts domain='Synopsis'}Advanced information{/ts}</h4><br/>
-    {ts domain='Synopsis'}<strong>Query</strong> is the actual query that needs to be run in order to bring results. Remember to use tokens as replacements for contact ID and/or financial types{/ts}<br/>
-    {ts domain='Synopsis'}<strong>Option Group</strong> is a general categorization of that field.{/ts}<br/>
+    <h4>{ts domain='synopsis'}Advanced information{/ts}</h4><br/>
+    {ts domain='synopsis'}<strong>Query</strong> is the actual query that needs to be run in order to bring results. Remember to use tokens as replacements for contact ID and/or financial types{/ts}<br/>
+    {ts domain='synopsis'}<strong>Option Group</strong> is a general categorization of that field.{/ts}<br/>
     <br/>
-    <h4>{ts domain='Synopsis'}Misc{/ts}</h4><br/>
-    {ts domain='Synopsis'}<strong>Graph</strong>{/ts}<br/>
-    {ts domain='Synopsis'}<strong>Remove</strong> If checked, this field will be permanently removed upon form saving.{/ts}<br/>
+    <h4>{ts domain='synopsis'}Misc{/ts}</h4><br/>
+    {ts domain='synopsis'}<strong>Remove</strong> If checked, this field will be permanently removed upon form saving.{/ts}<br/>
     <br/>
-    <h4>{ts domain='Synopsis'}Operations{/ts}</h4><br/>
-    {ts domain='Synopsis'}To <strong>add</strong> a new field, click on the '+ Entry' button.{/ts}<br/>
-    {ts domain='Synopsis'}To <strong>delete</strong> a field, select the checkbox "Remove" and save the form.{/ts}<br/>
+    <h4>{ts domain='synopsis'}Operations{/ts}</h4><br/>
+    {ts domain='synopsis'}To <strong>add</strong> a new field, click on the '+ Entry' button.{/ts}<br/>
+    {ts domain='synopsis'}To <strong>delete</strong> a field, select the checkbox "Remove" and save the form.{/ts}<br/>
     <br />
-    <h4>{ts domain='Synopsis'}Maintenance{/ts}</h4><br/>
-    {ts domain='Synopsis'}You can import a fresh configuration (in JSON format) by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/configimport"}">{ts domain='Synopsis'}here{/ts}</a>{ts} but please keep in mind that it will <u>wipe out</u> completely the current configuration you already created.{/ts}<br />
-    {ts domain='Synopsis'}<strong>There is NO undoing</strong> !{/ts}<br /><br />
-    {ts domain='Synopsis'}You can manage replacement token values by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/config"}">{ts domain='Synopsis'}here{/ts}</a>.<br />
+    <h4>{ts domain='synopsis'}Maintenance{/ts}</h4><br/>
+    {ts domain='synopsis'}You can import a fresh configuration (in JSON format) by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/configimport"}">{ts domain='synopsis'}here{/ts}</a>{ts} but please keep in mind that it will <u>wipe out</u> completely the current configuration you already created.{/ts}<br />
+    {ts domain='synopsis'}<strong>There is NO undoing</strong> !{/ts}<br /><br />
+    {ts domain='synopsis'}You can manage financial types/events etc to include by clicking {/ts}<a href="{crmURL p="civicrm/admin/settings/synopsis/config"}">{ts domain='synopsis'}here{/ts}</a>.<br />
     <br />
   </div>
 </div>
