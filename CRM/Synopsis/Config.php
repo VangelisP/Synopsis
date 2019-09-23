@@ -85,12 +85,13 @@ class CRM_Synopsis_Config {
   private function getSelectorFields($settings) {
     $allFields = json_decode($settings['field_configuration'], TRUE);
     $selectorFields = [];
-    foreach ($allFields as $fkey => $fdata) {
-      if (isset($fdata['DataType']) && $fdata['DataType'] == 'Selector') {
-        $selectorFields['custom_' . $fdata['CFID']] = $fdata['SelectRef'];
+    if (is_array($allFields) && count($allFields) > 0) {
+      foreach ($allFields as $fkey => $fdata) {
+        if (isset($fdata['DataType']) && $fdata['DataType'] == 'Selector') {
+          $selectorFields['custom_' . $fdata['CFID']] = $fdata['SelectRef'];
+        }
       }
     }
-
     return $selectorFields;
   }
 
