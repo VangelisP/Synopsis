@@ -145,14 +145,6 @@
                     }
                   }
                 },
-                Graph: {
-                  type: "boolean",
-                  title: "Graph",
-                  format: "hidden",
-                  options: {
-                    compact: true
-                  }
-                },
                 Remove: {
                   type: "boolean",
                   title: "Remove",

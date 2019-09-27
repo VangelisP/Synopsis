@@ -50,7 +50,6 @@ class CRM_Synopsis_Form_Synopsis extends CRM_Core_Form {
         "DataType": "String",
         "Query": "",
         "Optgroup":"fundraising",
-        "Graph": "",
         "Remove": "",
         "SelectRef": "none",
         "MName": "",

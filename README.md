@@ -83,8 +83,7 @@ As an alternative, you can also import an initial configuration that is located 
 * **DataType** is the type of CustomField you want to create/use.
 * **Select Reference** works only if you have picked up 'Selector' as Datatype above. This field will be ignored if datatype is not of type 'Selector'.
 * **Query** The MySQL query that will be used to calculate this field.
-* **OptionGroup** Leave it as 'FundRaising'. No use at the moment.
-* **Graph** No use at the moment.
+* **OptionGroup** If you are using the contribution table, please select 'Fundraising'. If this relates to memberships, use 'Membership'
 * **Remove** By checking this checkbox and saving the form, this specific entry (and associated CustomField) will be completely removed from the system. Be careful!
 
 When you write an SQL query, always remember to add the token of contact_id by adding {contact_id}.
