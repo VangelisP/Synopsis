@@ -107,7 +107,7 @@ class CRM_Synopsis_BAO_Synopsis {
           'text_length' => 32,
           'date_format' => (!empty(Civi::settings()->get('dateInputFormat'))) ? Civi::settings()->get('dateInputFormat') : 'mm/dd/yy',
           'time_format' => Civi::settings()->get('timeInputFormat'),
-          'is_search_range' => True,          
+          'is_search_range' => True,
         ];
         break;
       case 'Selector':
@@ -186,7 +186,16 @@ class CRM_Synopsis_BAO_Synopsis {
         !empty($fieldData['Query']) &&
         isset($fieldData['column_name']) &&
         !empty($fieldData['column_name'])) {
-        $SelectClause[] = "(" . $fieldData['Query'] . ") AS " . $fieldData['column_name'];
+        // Do a component check before rendering the query
+        switch ($fieldData['Optgroup']) {
+          case 'membership':
+            if (self::check_component_enabled('CiviMember')) {
+              $SelectClause[] = "(" . $fieldData['Query'] . ") AS " . $fieldData['column_name'];
+            }
+            break;
+          default:
+            $SelectClause[] = "(" . $fieldData['Query'] . ") AS " . $fieldData['column_name'];
+        }
       }
     }
 
@@ -251,7 +260,15 @@ class CRM_Synopsis_BAO_Synopsis {
     // Get a clean array of column_names
     foreach ($fieldConfig as $fkey => $fdata) {
       if (isset($fdata['column_name']) && !empty($fdata['column_name'])) {
-        $tblColumns[] = $fdata['column_name'];
+        switch ($fdata['Optgroup']) {
+          case 'membership':
+            if (self::check_component_enabled('CiviMember')) {
+              $tblColumns[] = $fdata['column_name'];
+            }
+            break;
+          default:
+            $tblColumns[] = $fdata['column_name'];
+        }
       }
     }
 
@@ -328,7 +345,7 @@ class CRM_Synopsis_BAO_Synopsis {
   }
 
   /*
-   * Helper function to do the replacement of tokens
+   * Helper function to do the replacement of tokens. It will do an `str_replace` for each token in the bracket
    */
 
   public static function synopsis_replace_tokens($query, $config) {
@@ -343,6 +360,15 @@ class CRM_Synopsis_BAO_Synopsis {
       $finTypes = self::synopsis_get_types('financial');
       $replacedSQL = str_replace('{financial_types}', implode(',', $finTypes), $replacedSQL);
     }
+    // Check to see if we have membership financial types and replace them as well
+    if (is_array($config['mbr_financial_type_ids'])) {
+      $replacedSQL = str_replace('{mbr_financial_types}', implode(',', $config['mbr_financial_type_ids']), $replacedSQL);
+    }
+    else {
+      // If none selected, include all financial types
+      $finTypes = self::synopsis_get_types('financial');
+      $replacedSQL = str_replace('{mbr_financial_types}', implode(',', $finTypes), $replacedSQL);
+    }
     $fiscal_dates = self::synopsis_get_fiscal_dates();
     // Do fiscal date replacement
     foreach ($fiscal_dates as $dkey => $dval) {
@@ -355,7 +381,7 @@ class CRM_Synopsis_BAO_Synopsis {
   /**
    * Based on the civicrm fiscal date setting, determine the dates for the
    * various begin and end fiscal year dates needed by the rewrite function.
-   * 
+   *
    * Borrowed from https://github.com/progressivetech/net.ourpowerbase.sumfields/blob/master/sumfields.php#L233
    * All credits go to Jamie McClelland
    * */

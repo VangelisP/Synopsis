@@ -1,12 +1,15 @@
 {* HEADER *}
 <div class="help">
-  {ts domain='synopsis'}Please select below which kind of optionsvalues you would like to include to the queries. They will be available as tokens.
-  For example, for financial types, the proper token to use in the query is `&lbrace;financial_types&rbrace;`.{/ts}
+  {ts domain='synopsis'}Please select below what would you like to include to your queries. They will be available as tokens.{/ts}
 </div>
 {foreach from=$elementNames item=elementName}
   <div class="crm-section">
     <div class="label">{$form.$elementName.label}</div>
     <div class="content">{$form.$elementName.html}</div>
+    {if $elementName|array_key_exists:$synopsis_fieldlegend}
+      <div class="help">{$synopsis_fieldlegend[$elementName]}</div>
+    {/if}
+    <div class="spacer"></div>
     <div class="clear"></div>
   </div>
 {/foreach}

@@ -16,16 +16,26 @@ class CRM_Synopsis_Form_Config extends CRM_Core_Form {
     // Fetch all financial types
     $availableFinTypes = Syn::synopsis_get_types('financial');
     $availableEventTypes = Syn::synopsis_get_types('events');
+    $fieldLegend = [];
 
     // Add extra settings to fieldsets
     if (Syn::check_component_enabled('CiviContribute')) {
       $this->add('select', 'financial_type_ids', E::ts('Financial Types'), $availableFinTypes, TRUE, array('multiple' => TRUE, 'class' => 'crm-select2 huge'));
+      $fieldLegend['financial_type_ids'] = E::ts('For financial types, the proper token to use in the query is `{financial_types}`.');
+    }
+
+    if (Syn::check_component_enabled('CiviMember')) {
+      $this->add('select', 'mbr_financial_type_ids', E::ts('Membership Financial Types'), $availableFinTypes, TRUE, array('multiple' => TRUE, 'class' => 'crm-select2 huge'));
+      $fieldLegend['mbr_financial_type_ids'] = E::ts('For membership financial types, the proper token to use in the query is `{mbr_financial_types}`.');
     }
 
     // Add extra settings to fieldsets
     if (Syn::check_component_enabled('CiviEvent')) {
       $this->add('select', 'event_type_ids', E::ts('Event Types'), $availableEventTypes, TRUE, array('multiple' => TRUE, 'class' => 'crm-select2 huge'));
+      $fieldLegend['mbr_financial_type_ids'] = E::ts('For event types, the proper token to use in the query is `{event_types}`.');
     }
+
+    $this->assign('synopsis_fieldlegend', $fieldLegend);
 
     $this->addButtons(array(
       array(
@@ -49,6 +59,12 @@ class CRM_Synopsis_Form_Config extends CRM_Core_Form {
     else {
       $storeVals['financial_type_ids'] = [];
     }
+    if (isset($values['mbr_financial_type_ids'])) {
+      $storeVals['mbr_financial_type_ids'] = $values['mbr_financial_type_ids'];
+    }
+    else {
+      $storeVals['mbr_financial_type_ids'] = [];
+    }    
     if (isset($values['event_type_ids'])) {
       $storeVals['event_type_ids'] = $values['event_type_ids'];
     }
