@@ -258,5 +258,31 @@
     "CFID": 0,
     "Weight": "",
     "column_name": ""
-  }
+  },
+  {
+    "Label": "Date of Last Membership payment",
+    "MName": "",
+    "DataType": "Date",
+    "SelectRef": "none",
+    "Query": "SELECT MAX(t1.receive_date) FROM civicrm_contribution t1\nWHERE t1.contact_id = {contact_id} AND t1.contribution_status_id = 1 \nAND t1.financial_type_id IN ({mbr_financial_types}) AND t1.is_test = 0",
+    "Optgroup": "membership",
+    "Graph": false,
+    "Remove": false,
+    "CFID": 0,
+    "Weight": "",
+    "column_name": ""
+  },
+  {
+    "Label": "Amount of last Membership payment",
+    "MName": "",
+    "DataType": "Money",
+    "SelectRef": "none",
+    "Query": "SELECT IFNULL((SELECT t1.total_amount\nFROM civicrm_contribution t1\nWHERE t1.contact_id = {contact_id}\nAND t1.contribution_status_id = 1 \nAND t1.financial_type_id IN ({mbr_financial_types}) \nAND t1.is_test = 0 \nORDER BY t1.receive_date DESC LIMIT 1),'0')",
+    "Optgroup": "membership",
+    "Graph": false,
+    "Remove": false,
+      "CFID": 0,
+      "Weight": "",
+      "column_name": ""
+  }  
 ]

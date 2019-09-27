@@ -32,6 +32,8 @@ Comes with the following available fields
 * Count of contributions year before last year
 * Average Annual (Calendar Year) Contribution
 * Campaign of largest contribution
+* Date of Last Membership payment
+* Amount of last Membership payment
 
 The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
@@ -73,7 +75,7 @@ cv en synopsis
 
 Upon a successful installation of this extension, declare your fields under Administer > Customize data and screens > Synopsis fields
 
-As an alternative, you can also import an initial configuration that is located [here](resources/configuration/initial_configuration.json) by navigating to `/civicrm/admin/settings/synopsis/configimport`. Once imported, page will redirect back to the Synopsis Fields. Save the form and you're done!
+As an alternative, you can also import an initial configuration that is located [here](resources/configuration/default_configuration.json) by navigating to `/civicrm/admin/settings/synopsis/configimport`. Once imported, page will redirect back to the Synopsis Fields. Save the form and you're done!
 
 * **CustomField ID** is the internal numeric ID that is being given when a CustomField is being created. Initially, this field is 0 but as soon as the customfield is being created, it will inherit the actual ID that is being stored in the DB. This field is **disabled** from editing.
 * **Machine name** is the internal name that is being given to a CustomField. Initially, this field is empty but as soon as the CustomField is being created, it will show up the machine name. This field is **disabled** from editing.

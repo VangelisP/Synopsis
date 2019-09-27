@@ -22,6 +22,7 @@ class CRM_Synopsis_Upgrader extends CRM_Synopsis_Upgrader_Base {
 
     $defaults = [
       'financial_type_ids' => array_keys($availableFinTypes),
+      'mbr_financial_type_ids' => array_keys($availableFinTypes),
       'event_type_ids' => array_keys($availableEventTypes),
     ];
     $formvalues['global_configuration'] = $defaults;
